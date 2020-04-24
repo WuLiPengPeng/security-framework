@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wlp.security.dao.UserDao">
+
+    <select id="findUserByUsername" parameterType="String" resultType="User">
+        SELECT *
+        FROM t_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="selectGrantedAuthorityByUsername" parameterType="String" resultType="String">
+        SELECT permsName
+        FROM t_perms
+                 INNER JOIN
+             (
+                 SELECT permsId
+                 FROM t_role_perms
+                          INNER JOIN (
+                     SELECT roleId
+                     FROM t_user
+                              INNER JOIN
+                          t_user_role ON t_user.id = t_user_role.userId
+                     WHERE t_user.username = #{username}) temp1
+                                     ON
+                                         t_role_perms.roleId = temp1.roleId) temp2
+             ON
+                 temp2.permsId = t_perms.permsId
+    </select>
+
+    <select id="selectPermsRoleByUsername" parameterType="String" resultType="Map">
+        SELECT group_concat(DISTINCT temp3.roleName)  AS roleName,
+               group_concat(DISTINCT temp4.permsName) AS permsName
+        FROM (
+                 SELECT temp2.permsId,
+                        temp2.roleId
+                 FROM (
+                          SELECT roleId
+                          FROM t_user_role
+                          WHERE userId = (
+                              SELECT id
+                              FROM t_user
+                              WHERE username = #{username}
+                          )
+                      ) temp1
+                          INNER JOIN (
+                     SELECT permsId,
+                            roleId
+                     FROM t_role_perms
+                 ) temp2 ON temp1.roleId = temp2.roleId
+             ) temp6,
+             (
+                 SELECT roleName,
+                        roleId
+                 FROM t_role
+             ) temp3,
+             (
+                 SELECT permsName,
+                        permsId
+                 FROM t_perms
+             ) temp4
+        WHERE temp3.roleId = temp6.roleId
+          AND temp4.permsId = temp6.permsId
+    </select>
+
+</mapper>

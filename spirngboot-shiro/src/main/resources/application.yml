@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+
+#数据库配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot-securityframewoke-test?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password:
+
+#mybatis
+mybatis:
+  type-aliases-package: com.wlp.springshiro.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+  #thymeleaf
+  thymeleaf:
+    cache: false #关闭缓存

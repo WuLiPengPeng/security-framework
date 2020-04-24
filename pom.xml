@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wlp</groupId>
+    <artifactId>security-framework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spirngboot-shiro</module>
+        <module>springboot-springsecurity</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.16.18</lombok.version>
+
+        <!--<mysql.version>5.1.47</mysql.version>-->
+        <!--本人使用的是 mysql8.0-->
+        <mysql.version>8.0.19</mysql.version>
+        <druid.version>1.1.20</druid.version>
+        <mybatis.spring.boot.version>2.1.2</mybatis.spring.boot.version>
+    </properties>
+
+    <dependencyManagement>
+        <!--spring-boot-dependencies-->
+       <dependencies>
+           <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+           <dependency>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-dependencies</artifactId>
+               <version>2.0.9.RELEASE</version>
+<!--               <version>2.1.4.RELEASE</version>-->
+               <scope>import</scope>
+               <type>pom</type>
+           </dependency>
+           <!--mysql-->
+           <dependency>
+               <groupId>mysql</groupId>
+               <artifactId>mysql-connector-java</artifactId>
+               <version>${mysql.version}</version>
+           </dependency>
+           <!--druid 数据库连接池-->
+           <dependency>
+               <groupId>com.alibaba</groupId>
+               <artifactId>druid</artifactId>
+               <version>${druid.version}</version>
+           </dependency>
+           <!--mybatis-->
+           <dependency>
+               <groupId>org.mybatis.spring.boot</groupId>
+               <artifactId>mybatis-spring-boot-starter</artifactId>
+               <version>${mybatis.spring.boot.version}</version>
+           </dependency>
+           <!--lombok-->
+           <dependency>
+               <groupId>org.projectlombok</groupId>
+               <artifactId>lombok</artifactId>
+               <version>${lombok.version}</version>
+           </dependency>
+       </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

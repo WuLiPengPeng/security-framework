@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+<!--
+    有的按钮应该在有权限的时候才显示
+-->
+    <h1>主页</h1>
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/add}">add</a>|
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/update}">update</a>|
+    <a sec:authorize access="hasRole('ADMIN')" th:href="@{/user/admin}">admin</a>|
+<!--    <a th:href="@{/logout}">注销</a>-->
+    <a sec:authorize="!isAuthenticated()" th:href="@{/toLogin}">登录</a>
+
+<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+    <input sec:authorize="isAuthenticated()" type="submit" value="注销" />
+    <input sec:authorize="isAuthenticated()" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+</form>
+</body>
+</html>
