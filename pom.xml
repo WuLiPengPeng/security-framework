@@ -24,7 +24,7 @@
 
         <!--<mysql.version>5.1.47</mysql.version>-->
         <!--本人使用的是 mysql8.0-->
-        <mysql.version>8.0.19</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <druid.version>1.1.20</druid.version>
         <mybatis.spring.boot.version>2.1.2</mybatis.spring.boot.version>
     </properties>
